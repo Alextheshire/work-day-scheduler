@@ -1,40 +1,26 @@
-var nine = $("#9")
-var ten = $("#10")
-var eleven = $("#11")
-var twelve = $("#12")
-var one = $("#13")
-var two = $("#14")
-var three = $("#15")
-var four = $("#16")
-var five = $("#17")
-var string = "9"
-// var timeBlocks = {
-//     nine: $('#9'),
-//     ten: $('#10'),
-//     eleven: $('#11'),
-//     twelve: $('#12'),
-//     one: $('#13'),
-//     two: $('#14'),
-//     three: $('#15'),
-//     four: $('#16'),
-//     five: $('#17')
-// }
-var timeArray = [9, 10, 11, 12, 13, 14, 15, 16, 17]
+var currentDay = moment().format("dddd, MMMM Do")
+var displayDay = $("#currentDay")
+var timerInterval
+var saveBtn = $('.saveBtn')
+var savedTxtArray = ["","","","","","","","",""]
+displayDay.text(currentDay)
 
-currentTime = moment().format("H")
-console.log(currentTime)
-$('.textarea').addClass("future")
-var exodia = ($.inArray( 11, timeArray, ))
+// var currentTime = moment().format("s")
+// console.log(currentTime)
+// $('.textarea').addClass("future")
+
 // parseInt(nine.attr('id'))
 // $(".textarea").toArray()[1].addClass('present')
+timerInterval = setInterval(function() {
+    var currentTime = moment().format("H")
 
 for(i = 9; i < 18; i++) {
     // console.log($('#' + string))
-    if(10 == i) {
+    if(currentTime == i) {
         $('#' + i).addClass("present")
         $('#' + i).removeClass("future")
         $('#' + i).removeClass("past")
-    } else if(10 < i) {
+    } else if(currentTime < i) {
         $('#' + i).addClass("future")
         $('#' + i).removeClass("present")
         $('#' + i).removeClass("past")
@@ -43,14 +29,27 @@ for(i = 9; i < 18; i++) {
         $('#' + i).removeClass("future")
         $('#' + i).removeClass("present")
     }
+    
 
 }
+// console.log(currentTime)
+}, 1000)
 // $('#' + 10).addClass("present")
 
 
 
+saveBtn.on('click', function() {
+    var clickBtn = $(this);
+    var clickedID = parseInt(clickBtn.attr("id"))
+    // console.log(parseInt(clickedID))
+    var text = clickBtn.parent().children().eq(1).val();
+    localStorage.setItem(clickedID, text)
 
+    
+})
 
-
+$('textarea').each(function(i) {
+    $(this).val(localStorage.getItem(i+9))
+})
 
 
